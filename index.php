@@ -1,4 +1,4 @@
-<?php /* SMARTSEARCHNS$Id: index.php,v 1.0 2006/11/02 20:30:00 pedroix Exp $ */
+<?php /* SMARTSEARCHNS$Id: index.php,v 1.1 2006/11/03 17:08:43 pedroix Exp $ */
 require_once( $AppUI->getModuleClass($m) );
 //--MSy--
 // function hilite()  moved to smartsearchns_func.php
@@ -114,7 +114,7 @@ else {
 				<tr>
 					<td align="left">
 					<div id="div_advancedsearch1" name="div_advancedsearch1"  style="<?php  echo ($ssearch['advanced_search']=="on" ? 'visibility:visible':'visibility:hidden'); ?> "> 1. </div></td>
-					<td align="left"><INPUT class="text" size="18" type="text" id="keyword" name="keyword" value="<?php echo @$_POST['keyword']; ?>"></td>
+					<td align="left"><INPUT class="text" size="18" type="text" id="keyword" name="keyword" value="<?php echo @stripslashes($_POST['keyword']); ?>"></td>
 					<td align="left"><input class="button" type="submit" value="<?php echo $AppUI->_('Search');?>"></td>
 					<td align="left"><input  name="allwords" id="allwords" type="checkbox"  <?php  echo ($ssearch['all_words']=="on" ? 'checked="checked"':""); ?>  > <?php echo $AppUI->_('All words');?></td>
 					<td align="left"><input  name="modselection" id="modselection" type="checkbox"  <?php  echo ($ssearch['mod_selection']=="on" ? 'checked="checked"':""); ?> onclick="toggleModules(this)" > <?php echo $AppUI->_('Modules selection');?></td>
@@ -125,9 +125,9 @@ else {
 				<table cellspacing="5" cellpadding="0" border="0">
 					<tr>
 						<td align="left"> 2. </td>
-						<td align="left"><INPUT class="text" size="18" type="text" id="keyword2" name="keyword2" value="<?php echo @$_POST['keyword2']; ?>"></td>
-						<td align="left"> 3. <INPUT class="text" size="18" type="text" id="keyword3" name="keyword3" value="<?php echo @$_POST['keyword3']; ?>"></td>
-						<td align="left"> 4. <INPUT class="text" size="18" type="text" id="keyword4" name="keyword4" value="<?php echo @$_POST['keyword4']; ?>"></td>
+						<td align="left"><INPUT class="text" size="18" type="text" id="keyword2" name="keyword2" value="<?php echo @stripslashes($_POST['keyword2']); ?>"></td>
+						<td align="left"> 3. <INPUT class="text" size="18" type="text" id="keyword3" name="keyword3" value="<?php echo @stripslashes($_POST['keyword3']); ?>"></td>
+						<td align="left"> 4. <INPUT class="text" size="18" type="text" id="keyword4" name="keyword4" value="<?php echo @stripslashes($_POST['keyword4']); ?>"></td>
 						<td align="left"><input  name="ignorespecchar" id="ignorespecchar" type="checkbox"  <?php  echo ($ssearch['ignore_specchar']=="on" ? 'checked="checked"':""); ?>  > <?php echo $AppUI->_('Ignore special chars');?></td>
 						<td align="left"><input  name="ignorecase" id="ignorecase" type="checkbox"  <?php  echo ($ssearch['ignore_case']=="on" ? 'checked="checked"':""); ?>  > <?php echo $AppUI->_('Ignore case');?></td>
 						<td align="left"><input  name="displayallflds" id="displayallflds" type="checkbox"  <?php  echo ($ssearch['display_all_flds']=="on" ? 'checked="checked"':""); ?>  > <?php echo $AppUI->_('Display all fields');?></td>
@@ -162,42 +162,42 @@ else {
 if (isset ($_POST['keyword']))
 { 
 	$search = new smartsearchns();
-	$search->keyword = $_POST['keyword'];
+	$search->keyword = addslashes($_POST['keyword']);
 
 	if (isset ($_POST['keyword']) && strlen($_POST['keyword'])>0) {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword']));
 		foreach ($or_keywords as $or_keyword) {
 			$ssearch['keywords'][$or_keyword]=Array($or_keyword);
 			$ssearch['keywords'][$or_keyword][1]=0;
 		}
 	} else {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword']));
 		foreach ($or_keywords as $or_keyword) {
 			unset($ssearch['keywords'][$or_keyword]);
 		}
 	}
 	
 	if (isset ($_POST['keyword2']) && strlen($_POST['keyword2'])>0) {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword2']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword2']));
 		foreach ($or_keywords as $or_keyword) {
 			$ssearch['keywords'][$or_keyword]=Array($or_keyword);
 			$ssearch['keywords'][$or_keyword][1]=1;
 		}
 	} else {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword2']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword2']));
 		foreach ($or_keywords as $or_keyword) {
 			unset($ssearch['keywords'][$or_keyword]);
 		}
 	}
 	
 	if (isset ($_POST['keyword3']) && strlen($_POST['keyword3'])>0) {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword3']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword3']));
 		foreach ($or_keywords as $or_keyword) {
 			$ssearch['keywords'][$or_keyword]=Array($or_keyword);
 			$ssearch['keywords'][$or_keyword][1]=2;
 		}
 	} else {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword3']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword3']));
 		foreach ($or_keywords as $or_keyword) {
 			unset($ssearch['keywords'][$or_keyword]);
 		}
@@ -205,13 +205,13 @@ if (isset ($_POST['keyword']))
 
 	
 	if (isset ($_POST['keyword4']) && strlen($_POST['keyword4'])>0) {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword4']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword4']));
 		foreach ($or_keywords as $or_keyword) {
 			$ssearch['keywords'][$or_keyword]=Array($or_keyword);
 			$ssearch['keywords'][$or_keyword][1]=3;
 		}
 	} else {
-		$or_keywords = preg_split('/[\s,;]+/', $_POST['keyword4']);
+		$or_keywords = preg_split('/[\s,;]+/', addslashes($_POST['keyword4']));
 		foreach ($or_keywords as $or_keyword) {
 			unset($ssearch['keywords'][$or_keyword]);
 		}
