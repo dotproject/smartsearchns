@@ -1,4 +1,4 @@
-<?php /* SMARTSEARCHNS$Id: smartsearchns.class.php,v 1.1 2006/11/03 17:08:43 pedroix Exp $ */
+<?php /* SMARTSEARCHNS$Id: smartsearchns.class.php,v 1.2 2007/01/29 01:05:48 pedroix Exp $ */
 class smartsearchns  {
 
 	var $table = null;
@@ -38,10 +38,10 @@ class smartsearchns  {
 	function createlink() {
 	$tmplink="";
 	if (isset($this->table_link) && isset($this->table_key)) 
-	$tmplink=$this->table_link.$records[$this->table_key];
+	$tmplink=$this->table_link.$records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key)];
 	
 	if (isset($this->table_link2) && isset($this->table_key2)) 
-	$tmplink=$this->table_link.$records[$this->table_key].$this->table_link2.$records[$this->table_key2];
+	$tmplink=$this->table_link.$records[$this->table_key].$this->table_link2.$records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key2)];
 	
 	return $tmplink;
 	}
@@ -53,7 +53,7 @@ class smartsearchns  {
 			$record_count += count($results);
 			$outstring= "<tr><th><b>".$AppUI->_($this->table_title). ' (' . count($results) . ')'."</b></th></tr> \n";
 			foreach($results as $records){
-			    if ($permissions->checkModuleItem($this->table_module, "view", $records[$this->table_key])) {
+			    if ($permissions->checkModuleItem($this->table_module, "view", $records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key)])) {
 // --MSy-				
 					$ii=0;
 					$display_val = "";
@@ -66,9 +66,9 @@ class smartsearchns  {
 //--MSy-				
 					$tmplink="";
 					if (isset($this->table_link) && isset($this->table_key)) 
-						$tmplink=$this->table_link.$records[$this->table_key];
+						$tmplink=$this->table_link.$records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key)];
 					if (isset($this->table_link2) && isset($this->table_key2)) 
-						$tmplink=$this->table_link.$records[$this->table_key].$this->table_link2.$records[$this->table_key2];
+						$tmplink=$this->table_link.$records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key)].$this->table_link2.$records[preg_replace('/^.*\.([^\.]+)$/','$1',$this->table_key2)];
 //--MSy--
 					$outstring .= "<tr>";
     				$outstring .= "<td>";
