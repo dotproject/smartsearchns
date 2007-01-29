@@ -1,16 +1,21 @@
-<?php /* SMARTSEARCHNS$Id: projects.inc.php,v 1.1 2006/11/02 08:39:30 pedroix Exp $ */
+<?php /* SMARTSEARCHNS$Id: projects.inc.php,v 1.1 2006/11/03 17:08:44 pedroix Exp $ */
 /**
 * projects Class
 */
 class projects extends smartsearchns {
 	var $table = "projects";
+	var $table_alias = "p";
 	var $table_module	= "projects";
-	var $table_key = "project_id";
+	var $table_key = "p.project_id";
 	var $table_link = "index.php?m=projects&a=view&project_id=";
 	var $table_title = "Projects";
-	var $table_orderby = "project_name";
-	var $search_fields  = array ("project_name","project_short_name","project_description","project_url","project_demo_url");
-	var $display_fields = array ("project_name","project_short_name","project_description","project_url","project_demo_url");
+	var $table_orderby = "p.project_name";
+	var $search_fields  = array ('p.project_name','p.project_short_name','p.project_description','p.project_url','p.project_demo_url', 'con.contact_last_name', 'con.contact_first_name', 'con.contact_email', 'con.contact_title', 'con.contact_email2', 'con.contact_phone', 'con.contact_phone2', 'con.contact_address1', 'con.contact_notes');
+	var $display_fields = array ('p.project_name','p.project_short_name','p.project_description','p.project_url','p.project_demo_url', 'con.contact_last_name', 'con.contact_first_name', 'con.contact_email', 'con.contact_title', 'con.contact_email2', 'con.contact_phone', 'con.contact_phone2', 'con.contact_address1', 'con.contact_notes');
+	var $table_joins = array (
+                              array ('table' => 'project_contacts','alias' => 'pc','join' => 'p.project_id = pc.project_id'),
+                              array ('table'=>'contacts','alias'=>'con','join'=>'pc.contact_id = con.contact_id')
+                        );
 
 	function cprojects (){
 		return new projects();
