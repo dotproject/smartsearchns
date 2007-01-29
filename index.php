@@ -1,8 +1,5 @@
-<?php /* SMARTSEARCHNS$Id: index.php,v 1.1 2006/11/03 17:08:43 pedroix Exp $ */
-require_once( $AppUI->getModuleClass($m) );
+<?php /* SMARTSEARCHNS$Id: index.php,v 1.2 2006/11/20 13:09:38 pedroix Exp $ */
 //--MSy--
-// function hilite()  moved to smartsearchns_func.php
-require_once "$baseDir/modules/$m/smartsearchns_func.php";
 $files = $AppUI->readFiles( dPgetConfig( 'root_dir' )."/modules/$m/searchobjects", "\.php$" );
 $ssearch=ARRAY();
 $ssearch['keywords']=ARRAY();
@@ -33,7 +30,6 @@ else {
 }
 
 ?>
-
 <script language="JavaScript">
 
 	function focusOnSearchBox() {
@@ -101,14 +97,10 @@ else {
 </script>
 
 
-<table width="100%" border="0" cellpadding="0" cellspacing=1>
-	<tr>
 <?php
      $titleBlock = new CTitleBlock( 'SmartSearchNS', 'kfind.png', $m, "$m.$a" );
      $titleBlock->show();
 ?>
-	</tr>
-</table>
 	<form name="frmSearch" action="?m=<?php echo $m ;?>"  method="POST">
 			<table cellspacing="5" cellpadding="0" border="0">
 				<tr>
